@@ -322,6 +322,22 @@ rooms.ChildAdded:Connect(function(newRoom)
     createRoomButton(newRoom)
 end)
 
+-- Save Teleports
+local teleportList = {}
+local teleportSection = Tabs.Teleports:CreateSection("Custom Teleports")
+local teleportInput = Tabs.Teleports:CreateInput("TeleportName", {Title = "Name", Placeholder = "Ex: MineStart"})
+local saveBtn = Tabs.Teleports:CreateButton({Title = "Save Current Position", Callback = function()
+    if teleportInput.Value ~= "" then
+        teleportList[teleportInput.Value] = humPart.CFrame
+    end
+end})
+local loadBtn = Tabs.Teleports:CreateButton({Title = "Load Selected Teleport", Callback = function()
+    local selected = teleportInput.Value
+    if teleportList[selected] then
+        humPart.CFrame = teleportList[selected]
+    end
+end})
+
 -- // ESP
 local OresESP = Tabs.Esp:CreateToggle("OresESP", {Title = "Ores ESP", Default = false })
 local RoomsESP = Tabs.Esp:CreateToggle("RoomsESP", {Title = "Rooms ESP", Default = false })
